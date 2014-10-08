@@ -29,6 +29,7 @@ public class ParseFile {
 			String line = null;
 			int i = 0;
 			while((line = buffered.readLine()) != null){
+				//because first 10 lines represent one row, 11th line is separator for next row
 				if(i==11){
 					i = 0;
 					break;
