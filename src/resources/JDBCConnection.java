@@ -7,11 +7,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-
-import resources.ReadConfig;
 
 /**
  * @author neerajsharma, sameersave
@@ -86,5 +84,9 @@ public class JDBCConnection {
 			e.getCause();
 			Log.logger.error("Got null pointer exception.");
 		}
+	}
+	
+	public void createTable(HashMap<String, String> tableHash) {
+		
 	}
 }

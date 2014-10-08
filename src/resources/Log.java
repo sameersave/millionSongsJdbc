@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class Log {
-	protected static Logger logger = LoggerFactory.getLogger("Default Logger");
+	public static Logger logger = LoggerFactory.getLogger("Default Logger");
 	
 	public Log() {
 	}

@@ -66,4 +66,8 @@ public class ReadConfig {
 		return (String) jsonObject.get(key);
 	}
 	
+	public JSONObject get() {
+		return this.jsonObject;
+	}
+	
 }
