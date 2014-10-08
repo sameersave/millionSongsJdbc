@@ -45,7 +45,7 @@ public class ParseFile {
 					//Log.logger.info(Integer.toString(i));
 					String[] parts = line.split(":");
 					if (parts.length > 1) {
-						Log.logger.info(parts[1].toString());
+						//Log.logger.info(parts[1].toString());
 						jdbcConnection.insert(parts);
 					}
 					

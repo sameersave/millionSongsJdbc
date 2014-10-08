@@ -5,9 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +42,7 @@ public class ReadConfig {
 		} catch (IOException e) {
 			logger.error("Cannot read file: ", filePath);
 		} catch (ParseException e) {
+			e.printStackTrace();
 			logger.error("Cannot parse JSON file: ", filePath);
 		} catch (NullPointerException e) {
 			logger.error("Null pointer exception.");
@@ -49,7 +50,20 @@ public class ReadConfig {
 		
 	}
 	
+	public ReadConfig(JSONObject jsonObject) {
+		this.jsonObject = jsonObject;
+	}
+	
 	public int getNumOfObjects() {
 		return this.jsonObject.size();
 	}
+	
+	public JSONObject get(String key) {
+		return (JSONObject) this.jsonObject.get(key);
+	}
+	
+	public String get(JSONObject jsonObject, String key) {
+		return (String) jsonObject.get(key);
+	}
+	
 }
