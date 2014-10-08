@@ -11,14 +11,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.sql.Connection;
 import java.util.zip.GZIPInputStream;
 
-import resources.Log;
+/**
+ * @author neerajsharma
+ *
+ */
 
 public class ParseFile {
 	
 	public void parse(String filePath) {
 		InputStream fileStream;
+		String line = null;
+		int rowSeparator = 0;
+		int rowNumber = 1;
+		JDBCConnection jdbcConnection = new JDBCConnection();
+		Connection dbConnection = jdbcConnection.getConnection();
+		
 		try {
 			//read the gzip file directly, to avoid decompression
 			fileStream = new FileInputStream(filePath);
@@ -26,27 +36,32 @@ public class ParseFile {
 			Reader decoder = new InputStreamReader(gzipStream, "UTF-8");
 			BufferedReader buffered = new BufferedReader(decoder);
 			
-			String line = null;
-			int i = 0;
-			while((line = buffered.readLine()) != null){
+			while ((line = buffered.readLine()) != null) {
 				//because first 10 lines represent one row, 11th line is separator for next row
-				if(i==11){
-					i = 0;
-					break;
+				if(rowSeparator == 11){
+					rowSeparator = 0;
+					break; //break at one row, temporarily
 				} else {
-					Log.logger.info(Integer.toString(i));
+					//Log.logger.info(Integer.toString(i));
 					String[] parts = line.split(":");
-					for (String part: parts) {
-						Log.logger.info(part);
+					if (parts.length > 1) {
+						Log.logger.info(parts[1].toString());
+						jdbcConnection.insert(parts);
 					}
-					i++;
+					
+					rowSeparator++;
 				}
+				rowNumber++;
 			}
+			
 		} catch (FileNotFoundException e) {
 			Log.logger.error("File not found: ", filePath);
 		} catch (IOException e) {
 			Log.logger.error("Unable to read file: ", filePath);
+		} finally {
+			jdbcConnection.commit();
 		}
+
 	}
 
 }

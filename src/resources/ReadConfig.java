@@ -15,6 +15,11 @@ import org.slf4j.LoggerFactory;
  * This class will help application read any JSON format config file.
  */
 
+/**
+ * @author neerajsharma
+ *
+ */
+
 public class ReadConfig {
 	private String filePath;
 	private JSONObject jsonObject;
